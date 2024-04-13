@@ -1,7 +1,8 @@
 ---
 title: Hono + Cloudflare Workers で REST API を作ろう！超入門
 tags:
-  - ''
+  - 'Hono'
+  - 'CloudflareWorkers'
 private: false
 updated_at: ''
 id: null
