@@ -6,9 +6,9 @@
 	"keywords": [],
 	"author": "",
 	"dependencies": {
-		"zenn-cli": "^0.1.153"
+		"zenn-cli": "^0.1.154"
 	},
 	"devDependencies": {
-		"@qiita/qiita-cli": "^1.4.0"
+		"@qiita/qiita-cli": "^1.4.3"
 	}
 }
