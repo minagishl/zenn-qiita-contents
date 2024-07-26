@@ -1,12 +1,12 @@
 ---
-title: 'Hono + Satori + Cloudflare でアバター生成 API を作った！'
+title: Hono + Satori + Cloudflare でアバター生成 API を作った！
 tags:
-  - 'hono'
-  - 'satori'
-  - 'cloudflarepages'
+  - satori
+  - CloudflarePages
+  - Hono
 private: false
-updated_at: ''
-id: null
+updated_at: '2024-07-27T04:45:40+09:00'
+id: 0874a71924ae6526abdf
 organization_url_name: null
 slide: false
 ignorePublish: false
