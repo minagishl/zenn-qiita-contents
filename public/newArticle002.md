@@ -77,6 +77,6 @@ https://hono-avatars.pages.dev/?background=0D8ABC&color=fff
 
 ## まとめ
 
-Hono、Satori、Cloudflare Pages を使って、簡単に文字や背景色を指定してアバターを生成できる API を作成しました。興味がある方は、ぜひ [GitHub のリポジトリ](https://github.com/minagishl/hono-avatars) をチェックしてみてください。自分だけのユニークなアバターを作る楽しさを体験してみてください！
+Hono、Satori、Cloudflare Pages を使って、簡単に文字や背景色を指定してアバターを生成できる API を作成しました。興味がある方は、ぜひ [GitHub のリポジトリ](https://github.com/minagishl/hono-avatars) をチェックしてみてください！
 
 コードに関するレビューやフィードバックがあれば、大歓迎です！どんな意見でもお待ちしています
