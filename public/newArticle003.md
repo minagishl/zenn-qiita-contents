@@ -1,13 +1,13 @@
 ---
-title: '私が作成した地震情報通知サービスの紹介'
+title: 私が作成した地震情報通知サービスの紹介
 tags:
-  - '分散型SNS'
-  - '地震'
-  - 'オープンソース'
-  - 'OSS'
+  - OSS
+  - オープンソース
+  - 地震
+  - 分散型SNS
 private: false
-updated_at: ''
-id: null
+updated_at: '2024-11-02T11:54:07+09:00'
+id: 5dc0560c5cd0ea5229eb
 organization_url_name: evacuate
 slide: false
 ignorePublish: false
