@@ -21,7 +21,7 @@ new:
 # View help
 .PHONY: help
 help:
-    @echo "Zenn help =================================" && \
-    npx zenn --help && \
-    echo "\nQiita help ===============================\n" && \
-    npx qiita help
+	@echo "Zenn help =================================" && \
+	npx zenn --help && \
+	echo "\nQiita help ===============================\n" && \
+	npx qiita help
