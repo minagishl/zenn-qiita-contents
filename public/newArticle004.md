@@ -17,7 +17,7 @@ Gmail のダークモードに対応したメールを作成する際のポイ�
 
 ## 対応方法
 
-1. メールの HTML で `color-scheme` を指定します:
+1. メールの HTML で `color-scheme` を指定します
 
 ```html
 <html>
@@ -31,7 +31,7 @@ Gmail のダークモードに対応したメールを作成する際のポイ�
 </html>
 ```
 
-2. CSS でダークモード時のスタイルを定義:
+2. CSS でダークモード時のスタイルを定義
 
 ```css
 @media (prefers-color-scheme: dark) {
