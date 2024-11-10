@@ -1,11 +1,11 @@
 ---
-title: '【備忘録】Gmail でダークモードに対応させる方法'
+title: 【備忘録】Gmail でダークモードに対応させる方法
 tags:
-  - 備忘録
   - mail
+  - 備忘録
 private: false
-updated_at: ''
-id: null
+updated_at: '2024-11-10T18:53:42+09:00'
+id: 476150a8d00bfccee71b
 organization_url_name: null
 slide: false
 ignorePublish: false
