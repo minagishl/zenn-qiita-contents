@@ -5,7 +5,7 @@ tags:
   - CloudflareWorkers
   - Hono
 private: false
-updated_at: '2025-02-02T02:56:50+09:00'
+updated_at: "2025-02-02T02:56:50+09:00"
 id: deee4bfdb34c91874775
 organization_url_name: null
 slide: false
@@ -79,7 +79,7 @@ setCookie(c, "discord_user", jwt, {
 
 ### 3. メールドメインのチェック
 
-Google OAuth2 を使用して取得したメールアドレスのドメインをチェックし、特定のドメインを持つユーザーのみを許可する
+Google OAuth2 を使用して取得したメールアドレスのドメインをチェックし、特定のドメインを持つユーザーのみを許可します
 
 ### 4. Discord ロールの付与
 
