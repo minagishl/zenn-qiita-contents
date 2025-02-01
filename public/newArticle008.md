@@ -6,12 +6,13 @@ tags:
   - monitoring
   - AdventCalendar2024
 private: false
-updated_at: '2024-12-15T00:22:09+09:00'
+updated_at: "2024-12-15T00:22:09+09:00"
 id: 8fe3a0a2d8a1c7e0e46f
 organization_url_name: null
 slide: false
 ignorePublish: false
 ---
+
 ## はじめに
 
 この記事は、[New Relic 使ってみた情報をシェアしよう！ ](https://qiita.com/advent-calendar/2024/newrelic) 15 日目の記事です

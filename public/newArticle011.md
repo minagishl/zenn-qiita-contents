@@ -1,11 +1,11 @@
 ---
 title: Discord サーバーを守る ロール認証アプリを作成した話
 tags:
-  - 'cloudflareworkers'
-  - 'hono'
-  - 'discord'
+  - "cloudflareworkers"
+  - "hono"
+  - "discord"
 private: false
-updated_at: ''
+updated_at: ""
 id: null
 organization_url_name: null
 slide: false
@@ -44,19 +44,19 @@ OAuth2 の `state` パラメータを利用し、CSRF 攻撃を防ぐ仕組み�
 ```ts
 // Function to generate state for CSRF protection
 async function generateState(): Promise<string> {
-	const buffer = new Uint8Array(32);
-	crypto.getRandomValues(buffer);
-	const state = Array.from(buffer)
-		.map((b) => b.toString(16).padStart(2, '0'))
-		.join('');
-	return state;
+  const buffer = new Uint8Array(32);
+  crypto.getRandomValues(buffer);
+  const state = Array.from(buffer)
+    .map((b) => b.toString(16).padStart(2, "0"))
+    .join("");
+  return state;
 }
 
 // Validate the CSRF token
 function validateState(c: Context, state: string): boolean {
-	const savedState = getCookie(c, 'oauth_state');
-	deleteCookie(c, 'oauth_state');
-	return savedState === state;
+  const savedState = getCookie(c, "oauth_state");
+  deleteCookie(c, "oauth_state");
+  return savedState === state;
 }
 ```
 
@@ -69,11 +69,11 @@ JWT の署名には環境変数 `JWT_SECRET` を用いることで、安全性�
 ```ts
 // Save discordUserId safely with JWT
 const jwt = await sign({ discordUserId }, c.env.JWT_SECRET);
-setCookie(c, 'discord_user', jwt, {
-	httpOnly: true,
-	secure: true,
-	sameSite: 'Lax',
-	maxAge: 600,
+setCookie(c, "discord_user", jwt, {
+  httpOnly: true,
+  secure: true,
+  sameSite: "Lax",
+  maxAge: 600,
 });
 ```
 
@@ -89,14 +89,14 @@ Google OAuth2 を使用して取得したメールアドレスのドメインを
 ```ts
 // Assign a role
 const roleResponse = await fetch(
-	`${c.env.DISCORD_API_BASE}/guilds/${c.env.DISCORD_GUILD_ID}/members/${discordUserId}/roles/${c.env.DISCORD_ROLE_ID}`,
-	{
-		method: 'PUT',
-		headers: {
-			Authorization: `Bot ${c.env.DISCORD_BOT_TOKEN}`,
-			'Content-Type': 'application/json',
-		},
-	}
+  `${c.env.DISCORD_API_BASE}/guilds/${c.env.DISCORD_GUILD_ID}/members/${discordUserId}/roles/${c.env.DISCORD_ROLE_ID}`,
+  {
+    method: "PUT",
+    headers: {
+      Authorization: `Bot ${c.env.DISCORD_BOT_TOKEN}`,
+      "Content-Type": "application/json",
+    },
+  },
 );
 ```
 

@@ -7,12 +7,13 @@ tags:
   - framework
   - AdventCalendar2024
 private: false
-updated_at: '2024-12-20T00:21:50+09:00'
+updated_at: "2024-12-20T00:21:50+09:00"
 id: 568d6bd3c41c3d6af326
 organization_url_name: unipro-tech
 slide: false
 ignorePublish: false
 ---
+
 ## はじめに
 
 近年、JavaScript および TypeScript を活用したフロントエンド開発の技術は急速に進化を遂げています  

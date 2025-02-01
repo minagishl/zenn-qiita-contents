@@ -4,7 +4,7 @@ tags:
   - mail
   - 備忘録
 private: false
-updated_at: '2024-11-10T18:55:44+09:00'
+updated_at: "2024-11-10T18:55:44+09:00"
 id: 476150a8d00bfccee71b
 organization_url_name: null
 slide: false
@@ -21,13 +21,13 @@ Gmail のダークモードに対応したメールを作成する際のポイ�
 
 ```html
 <html>
-	<head>
-		<meta name="color-scheme" content="light dark" />
-		<meta name="supported-color-schemes" content="light dark" />
-	</head>
-	<body class="contents">
-		<!-- メール本文 -->
-	</body>
+  <head>
+    <meta name="color-scheme" content="light dark" />
+    <meta name="supported-color-schemes" content="light dark" />
+  </head>
+  <body class="contents">
+    <!-- メール本文 -->
+  </body>
 </html>
 ```
 
@@ -35,10 +35,10 @@ Gmail のダークモードに対応したメールを作成する際のポイ�
 
 ```css
 @media (prefers-color-scheme: dark) {
-	.contents {
-		background-color: #1f1f1f;
-		color: #ffffff;
-	}
+  .contents {
+    background-color: #1f1f1f;
+    color: #ffffff;
+  }
 }
 ```
 
@@ -48,8 +48,8 @@ Gmail のダークモードに対応したメールを作成する際のポイ�
 
 ```css
 [data-ogsc] .contents {
-	background-color: #1f1f1f;
-	color: #ffffff;
+  background-color: #1f1f1f;
+  color: #ffffff;
 }
 ```
 

@@ -6,7 +6,7 @@ tags:
   - 地震
   - 分散型SNS
 private: false
-updated_at: '2024-11-02T11:54:07+09:00'
+updated_at: "2024-11-02T11:54:07+09:00"
 id: 5dc0560c5cd0ea5229eb
 organization_url_name: evacuate
 slide: false

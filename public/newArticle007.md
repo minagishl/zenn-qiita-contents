@@ -5,12 +5,13 @@ tags:
   - AdventCalendar2024
   - MarkdownAI
 private: false
-updated_at: '2024-12-10T00:00:22+09:00'
+updated_at: "2024-12-10T00:00:22+09:00"
 id: f707fa496117f396cad0
 organization_url_name: null
 slide: false
 ignorePublish: false
 ---
+
 この記事は、[Markdown AI のサーバー AI 機能を使って Web サイトを作ってみよう](https://qiita.com/advent-calendar/2024/markdownai) 10 日目の記事です
 
 最近は忙しくてニュースを見る時間がない…という方も多いのではないでしょうか？  

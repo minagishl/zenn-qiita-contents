@@ -4,7 +4,7 @@ tags:
   - CloudflareWorkers
   - Hono
 private: false
-updated_at: '2024-04-14T01:19:08+09:00'
+updated_at: "2024-04-14T01:19:08+09:00"
 id: a31090c61b278ac08c10
 organization_url_name: null
 slide: false
@@ -67,23 +67,23 @@ $ npm run dev
 `src/index.ts` を以下のように編集します。
 
 ```typescript
-import { Hono } from 'hono';
+import { Hono } from "hono";
 
 const app = new Hono();
 
-app.get('/', (c) => {
-	return c.text('Hello Hono!');
+app.get("/", (c) => {
+  return c.text("Hello Hono!");
 });
 
 // Add a new route
-app.get('/api', (c) => {
-	return c.json({ message: 'Hello Hono!' });
+app.get("/api", (c) => {
+  return c.json({ message: "Hello Hono!" });
 });
 
 // Add a new route with a parameter
-app.get('/api/hello/:name', (c) => {
-	const name = c.params.name;
-	return c.text(`Hello, ${name}!`);
+app.get("/api/hello/:name", (c) => {
+  const name = c.params.name;
+  return c.text(`Hello, ${name}!`);
 });
 
 export default app;

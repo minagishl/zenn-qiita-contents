@@ -5,12 +5,13 @@ tags:
   - astro
   - AdventCalendar2024
 private: false
-updated_at: '2024-12-05T00:30:38+09:00'
+updated_at: "2024-12-05T00:30:38+09:00"
 id: 9984b4a41f153abc3126
 organization_url_name: null
 slide: false
 ignorePublish: false
 ---
+
 この記事は、[はじめてのアドベントカレンダー](https://qiita.com/advent-calendar/2024/first-time) 5 日目の記事です
 
 初めてアドベントカレンダーに参加したので少し緊張していますが、自分が描ける範囲で記事を書いていきたいと思います
@@ -57,10 +58,10 @@ Astro のデフォルトのブログテンプレートには、`src/content/blog
 
 ```markdown
 ---
-title: 'Hello Astro!'
+title: "Hello Astro!"
 description: "This is the first Astro article I've created!"
-pubDate: 'Dec 05 2024'
-heroImage: '/blog-placeholder-5.jpg'
+pubDate: "Dec 05 2024"
+heroImage: "/blog-placeholder-5.jpg"
 ---
 
 Hello, Astro! This is the first Astro article I've created!
@@ -85,10 +86,10 @@ npm i astro-embed
 
 ```markdown
 ---
-title: 'Hello Astro!'
+title: "Hello Astro!"
 description: "This is the first Astro article I've created!"
-pubDate: 'Dec 05 2024'
-heroImage: '/blog-placeholder-5.jpg'
+pubDate: "Dec 05 2024"
+heroImage: "/blog-placeholder-5.jpg"
 ---
 
 <!-- Omit code as it will be off the screen. -->
