@@ -4,7 +4,7 @@ tags:
   - mail
   - 備忘録
 private: false
-updated_at: "2024-11-10T18:55:44+09:00"
+updated_at: '2025-02-02T02:53:29+09:00'
 id: 476150a8d00bfccee71b
 organization_url_name: null
 slide: false

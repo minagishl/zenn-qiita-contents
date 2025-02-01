@@ -1,12 +1,12 @@
 ---
 title: Discord サーバーを守る ロール認証アプリを作成した話
 tags:
-  - "cloudflareworkers"
-  - "hono"
-  - "discord"
+  - discord
+  - CloudflareWorkers
+  - Hono
 private: false
-updated_at: ""
-id: null
+updated_at: '2025-02-02T02:53:29+09:00'
+id: deee4bfdb34c91874775
 organization_url_name: null
 slide: false
 ignorePublish: false

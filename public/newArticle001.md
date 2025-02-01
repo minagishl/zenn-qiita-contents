@@ -4,7 +4,7 @@ tags:
   - CloudflareWorkers
   - Hono
 private: false
-updated_at: "2024-04-14T01:19:08+09:00"
+updated_at: '2025-02-02T02:53:29+09:00'
 id: a31090c61b278ac08c10
 organization_url_name: null
 slide: false
