@@ -7,7 +7,7 @@ tags:
   - framework
   - AdventCalendar2024
 private: false
-updated_at: '2025-02-02T02:53:29+09:00'
+updated_at: "2025-02-02T02:53:29+09:00"
 id: 568d6bd3c41c3d6af326
 organization_url_name: unipro-tech
 slide: false

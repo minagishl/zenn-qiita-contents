@@ -6,7 +6,7 @@ tags:
   - monitoring
   - AdventCalendar2024
 private: false
-updated_at: '2025-02-02T02:53:29+09:00'
+updated_at: "2025-02-02T02:53:29+09:00"
 id: 8fe3a0a2d8a1c7e0e46f
 organization_url_name: null
 slide: false
