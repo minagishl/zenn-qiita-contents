@@ -2,5 +2,7 @@
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "files.associations": {
     ".prettierrc": "json"
-  }
+  },
+  "textlint.autoFixOnSave": true,
+  "textlint.languages": ["markdown"]
 }
