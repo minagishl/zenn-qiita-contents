@@ -5,7 +5,7 @@ tags:
   - 学校生活
   - N高等学校
 private: false
-updated_at: "2025-02-08T00:33:44+09:00"
+updated_at: '2025-02-08T00:48:53+09:00'
 id: 2fc8b61443a1c7bc4458
 organization_url_name: nnn-school
 slide: false
