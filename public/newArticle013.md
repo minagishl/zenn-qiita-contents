@@ -1,13 +1,13 @@
 ---
 title: CodeRabbit を実際に数ヶ月使用してみた感想
 tags:
-  - "AI"
-  - "CodeRabbit"
-  - "OSS"
-  - "コードレビュー"
+  - AI
+  - OSS
+  - コードレビュー
+  - CodeRabbit
 private: false
-updated_at: ""
-id: null
+updated_at: '2025-02-13T19:59:35+09:00'
+id: bea38e4aa20192be2ccb
 organization_url_name: null
 slide: false
 ignorePublish: false
