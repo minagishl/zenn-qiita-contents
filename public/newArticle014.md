@@ -1,12 +1,12 @@
 ---
-title: "開発中の “あの一手間” を減らすポート確認 CLI「knows」を作った"
+title: 開発中の “あの一手間” を減らすポート確認 CLI「knows」を作った
 tags:
-  - "typescript"
-  - "cli"
-  - "nodejs"
+  - Node.js
+  - CLI
+  - TypeScript
 private: false
-updated_at: ""
-id: null
+updated_at: '2025-10-27T18:49:32+09:00'
+id: 237ea7f4ef90d7db25ab
 organization_url_name: null
 slide: false
 ignorePublish: false
