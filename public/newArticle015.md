@@ -1,13 +1,13 @@
 ---
 title: Google アカウント権限エラーを個人開発で解決した話
 tags:
-  - GoogleForms
   - PHP
   - API
+  - GoogleForms
   - SolidJS
 private: false
-updated_at: ''
-id: null
+updated_at: '2025-11-16T23:39:00+09:00'
+id: 89f7756532be1fc48ec7
 organization_url_name: nnn-school
 slide: false
 ignorePublish: false
