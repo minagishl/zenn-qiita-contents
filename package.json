@@ -5,12 +5,12 @@
     "format": "prettier --write '**/*.md'"
   },
   "dependencies": {
-    "prettier": "^3.4.2",
-    "zenn-cli": "^0.1.158"
+    "prettier": "^3.6.2",
+    "zenn-cli": "^0.2.10"
   },
   "devDependencies": {
-    "@qiita/qiita-cli": "^1.6.1",
-    "textlint": "^14.4.2",
+    "@qiita/qiita-cli": "^1.6.2",
+    "textlint": "^15.3.0",
     "textlint-rule-preset-ja-spacing": "^2.4.3"
   }
 }
