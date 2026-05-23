@@ -6,12 +6,12 @@ version:
 # CLI Update
 .PHONY: update
 update:
-	npm install zenn-cli@latest && npm install @qiita/qiita-cli@latest
+	pnpm install zenn-cli@latest && pnpm install @qiita/qiita-cli@latest
 
 # Sync GitHub repository and Qiita articles
 .PHONY: pull
 pull:
-	git pull && npx qiita pull
+	git pull && pnpm execqiita pull
 
 # Create a new article
 .PHONY: new
