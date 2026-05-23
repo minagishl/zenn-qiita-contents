@@ -1,0 +1,208 @@
+---
+title: 「同じJSONを256件送ると約73%小さくなる」— MessagePackの次を狙う Twilic を公開しました！
+tags:
+  - TypeScript
+  - Rust
+  - OSS
+  - MessagePack
+  - バイナリ
+private: false
+updated_at: ""
+id: null
+organization_url_name: null
+slide: false
+ignorePublish: false
+---
+
+## はじめに
+
+API や WebSocket、バッチ連携で「形は同じなのに、キー名を毎回送り続けている」ことに違和感を覚えたことはありませんか？
+
+私は JSON や MessagePack をベンチマークで比較しながら調べていましたが、**同じスキーマのレコードを大量に送る**ときは、どうしてもバイト数が伸びると感じていました
+Protobuf ほどスキーマを固定したくない場面でも、もっと小さく・速く送りたい！
+
+そこで **Twilic** というバイナリフォーマットと、そのマルチ言語実装を [GitHub の twilic](https://github.com/twilic) で公開しました！
+
+この記事では、Twilic が何を解決するのか、どう使うのか、そしてベンチマークでどれくらい効くのかをまとめます
+
+## Twilic とは
+
+Twilic は、**構造化データ向けのコンパクトなバイナリフォーマット**です
+
+- MessagePack のように **スキーマなしでも** 任意の JSON 相当の値をそのまま encode / decode できる
+- 同じ形のオブジェクト・同じキー・同じ文字列が繰り返されるほど、**自動的に小さくなる**！
+- スキーマが分かる場合は **Bound プロファイル**でフィールド名を送らない
+- 256 件まとめて送る **Batch**、前回メッセージとの差分 **Patch** も同じフォーマット族で扱える
+
+名前は古英語 _twilic_（現代英語の _twill_ ＝綾織）に由来します
+繰り返す糸を織り込むように、繰り返すデータ構造を 1 本のバイナリに「織り込む」イメージです（[仕様リポジトリの README](https://github.com/twilic/twilic/blob/main/README.md) 参照）
+
+仕様は [twilic/twilic](https://github.com/twilic/twilic)（CC-BY-4.0）、実装は Rust をコアに TypeScript / Go / Zig などで提供しています
+
+## なぜ MessagePack だけでは足りないことがあるか
+
+MessagePack は「JSON をバイナリにした」感覚で扱いやすく、単発のオブジェクトでは Twilic と同等サイズになることも多いです
+
+一方、次のようなデータでは **キー名・型情報・文字列の繰り返し**がそのままコストになります
+
+- テレメトリやログの **同型レコードのバッチ**
+- WebSocket で流す **同じ shape のイベント**
+- `userId` / `active` / `country` のように **列が揃った表形式データ**
+
+Twilic は v2 ワイヤで `shape_def` / `key_ref` / `str_ref` や `row_batch` / `col_batch` / `state_patch` などを使い、**1 ショットでも学習しつつ、セッションがあればさらに圧縮**する設計です（詳細は [SPEC.md](https://github.com/twilic/twilic/blob/main/SPEC.md)）
+
+## 5 分で試す（Node.js）
+
+npm パッケージは `@twilic/core` です（v3 系、Twilic v2 ワイヤ）
+
+```bash
+pnpm add @twilic/core
+```
+
+```ts
+import {
+  encode,
+  decode,
+  createSessionEncoder,
+  type TwilicValue,
+} from "@twilic/core";
+
+const value: TwilicValue = {
+  id: 1001n,
+  name: "alice",
+  active: true,
+};
+
+const bytes = encode(value);
+const roundtrip = decode(bytes);
+
+const session = createSessionEncoder();
+session.encode(value);
+const patch = session.encodePatch({ ...value, name: "alicia" });
+```
+
+Node.js では N-API（Rust コア）が自動で使われ、`bigint` もそのまま扱えます
+ブラウザでは `init({ prefer: "wasm" })` で WASM を読み込みます
+
+Hono で `Content-Type` ごとバイナリ body を扱うなら [@twilic/hono](https://github.com/twilic/hono) も用意しています
+
+```ts
+import { Hono } from "hono";
+import { twilicParser, twilicResponse } from "@twilic/hono";
+
+const app = new Hono();
+
+app.post("/users", twilicParser(), async (c) => {
+  const input = c.var.twilicBody;
+  return twilicResponse(c, { ok: true, received: input });
+});
+```
+
+Go では `go get github.com/twilic/twilic-go`、Rust では [twilic-rust](https://github.com/twilic/twilic-rust) を参照してください
+
+## ベンチマーク：どれくらい小さくなるか
+
+[benchmark](https://github.com/twilic/benchmark) リポジトリの fixture と同じデータで、ローカル（Node 24 + N-API）計測した **エンコード後サイズ**が次のとおりでした
+
+| payload                   |      Twilic | MessagePack |     CBOR |     BSON |  vs MessagePack |
+| ------------------------- | ----------: | ----------: | -------: | -------: | --------------: |
+| single-small（1 件）      |       140 B |       140 B |    144 B |    198 B |              0% |
+| batch-homogeneous-256     | **5,316 B** |    19,505 B | 20,633 B | 28,241 B | **72.75% 削減** |
+| batch-mixed-256           | **9,799 B** |    20,893 B | 22,204 B | 32,956 B | **53.10% 削減** |
+| session-patch-hot（初回） |        89 B |        89 B |     93 B |    120 B |              0% |
+
+ポイントは次の 2 つです
+
+1. **単発 1 件**では MessagePack と互角（悪化しない設計）
+2. **同型 256 件**では MessagePack の約 1/4 サイズまで縮む！
+
+スループットも、同じベンチで `encode` / `decode` は MessagePack と同オーダーで、セッション patch 系はホットパス最適化の余地が大きい領域です
+数値はマシン依存なので、興味があれば手元で再現してください
+
+```bash
+git clone https://github.com/twilic/benchmark.git
+cd benchmark
+pnpm install
+pnpm --dir ../twilic-js build   # 初回のみ
+pnpm bench -- --twilic-vs-msgpack-only
+```
+
+ブラウザでフォーマット比較だけ試したい場合は [playground](https://github.com/twilic/playground) があり、Twilic / MessagePack / CBOR / BSON / JSON に加え、スキーマあり比較（Protobuf・Avro・FlatBuffers・Arrow IPC）も載せています！
+
+## 設計で大事にしていること
+
+仕様で特に意識しているのは次の点です
+
+### 1. スキーマなしで始められる
+
+最初の 1 通は self-describing
+繰り返しが見えたら shape / key / string の interning に移行します
+Protobuf を導入するほどではないサービスでも、そのまま試せます
+
+### 2. スキーマがあればさらに詰められる
+
+`encodeWithSchema`（Bound プロファイル）でフィールド名を送らず、型に沿ったビットパックができます
+playground の「Schema-first」タブで他フォーマットとのサイズ比較ができます
+
+### 3. バッチと patch が同じ家族
+
+- **Batch**: 256 件を 1 パケットに（row / column 両方）
+- **Session patch**: 前回から変わったフィールドだけ送る
+
+リアルタイム同期やゲーム状態、在庫差分など、「毎回フル JSON」がもったいない場面向きです
+
+### 4. 決定的なワイヤ
+
+同じプロファイル・同じ学習状態なら同じバイト列になるよう、再現性を仕様に含めています
+
+## 向いている場面・向いていない場面
+
+**向いている**
+
+- 同じ JSON shape の API / WebSocket / ジョブキュー
+- エッジ〜クラウド間の帯域が気になるバッチ
+- MessagePack は使っているが、**配列バッチだけまだ大きい**と感じているチーム
+
+**向いていない（Non-Goals より）**
+
+- すべての JSON / 既存プロトコルを置き換えること
+- アプリケーション意味論の定義
+- 単発の小さなペイロードだけを延々送る（そこでは MessagePack で十分なことが多い）
+
+## リポジトリ一覧
+
+| リポジトリ                                                  | 内容                           |
+| ----------------------------------------------------------- | ------------------------------ |
+| [twilic/twilic](https://github.com/twilic/twilic)           | 仕様・ドキュメント             |
+| [twilic/twilic-rust](https://github.com/twilic/twilic-rust) | Rust コア実装                  |
+| [twilic/twilic-js](https://github.com/twilic/twilic-js)     | `@twilic/core`（N-API + WASM） |
+| [twilic/twilic-go](https://github.com/twilic/twilic-go)     | Go モジュール                  |
+| [twilic/twilic-zig](https://github.com/twilic/twilic-zig)   | Zig 実装                       |
+| [twilic/hono](https://github.com/twilic/hono)               | Hono ミドルウェア              |
+| [twilic/benchmark](https://github.com/twilic/benchmark)     | ベンチハーネス                 |
+| [twilic/playground](https://github.com/twilic/playground)   | ブラウザ比較 UI                |
+| [twilic/media-kit](https://github.com/twilic/media-kit)     | ロゴ・ブランドガイド           |
+
+※ プロジェクトはもともと Recurram という名前で開発を始め、v3 で Twilic にリネームしています
+
+## 今後
+
+- 各言語実装の API 安定化と相互運用テストの拡充
+- フレームワーク連携（Hono 以外）の増やし
+- コミュニティからのフィードバックを仕様 v2 プロファイルに反映
+
+バイナリフォーマットは「仕様が読める」「数字で比較できる」「すぐ試せる」の 3 点が大事だと思っています
+Twilic はその 3 つを揃えるために、仕様・ベンチ・playground を最初から分割リポジトリにしています
+
+## まとめ
+
+Twilic は **MessagePack 的な使いやすさ**と、**繰り返しデータ向けの圧縮**を同じフォーマットに載せた OSS です
+同型 256 件のバッチでは MessagePack 比 **約 73% サイズ削減**（上記ベンチ）まで見えます！
+
+- 仕様: https://github.com/twilic/twilic
+- npm: https://www.npmjs.com/package/@twilic/core
+- ベンチ: https://github.com/twilic/benchmark
+- Playground: https://github.com/twilic/playground
+
+スター・Issue・PR・実プロダクトでの試用、どれも歓迎です！
+同じ「繰り返し JSON」に悩んでいる方のフィードバックが、次のワイヤ改善に直結します！
